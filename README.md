@@ -8,4 +8,4 @@ In this simple competitor registration app for a running event I implemented fou
 
 The app was deployed with Heroku and Surge
 
-[Live version](runningcompetitionregistration.surge.sh)
+[Live version](https://runningcompetitionregistration.surge.sh)
