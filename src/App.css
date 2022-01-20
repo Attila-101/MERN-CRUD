@@ -1,0 +1,26 @@
+.App {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.competitor {
+  border: 1px solid black;
+  margin-top: 1rem;
+  padding: 0.2rem;
+}
+
+label {
+  margin-top: 0.5rem;
+}
+
+.registerButton {
+  margin-top: 0.5rem;
+}
+
+h2 {
+  margin-top: 2rem;
+  margin-bottom: 0.4rem;
+}
