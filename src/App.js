@@ -9,7 +9,6 @@ function App() {
   const [distance, setDistance] = useState(0);
   const [newDistance, setNewDistance] = useState('');
   const [competitorList, setCompetitorList] = useState([])
-  const inputRef = useRef(null);
 
   useEffect(() => {
     axios.get("https://mern-competitor-registration.herokuapp.com/read").then((response) => {
@@ -47,19 +46,14 @@ function App() {
     setDistance("");
   };
 
-  //clear input field
-  const clearInput = () => {
-    inputRef.current.value = "";
-   };
-
   return (
     <div className="App">
     <h1>The Run as far as you like race</h1>
     <h2>Competitor Registration</h2>
     <label>Competitor name: </label>
-    <input type="text" //ref={inputRef}
+    <input type="text" 
     value={competitorName}
-    onChange={(event) => {setCompetitorName(event.target.value); /*clearInput();*/}}/>
+    onChange={(event) => {setCompetitorName(event.target.value); }}/>
     <label>Running Club: </label>
     <input type="text" value={runningClub}
     onChange={(event) => {setRunningClub(event.target.value);}}/>
