@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './App.css';
 import axios from 'axios';
 
@@ -9,12 +9,13 @@ function App() {
   const [distance, setDistance] = useState(0);
   const [newDistance, setNewDistance] = useState('');
   const [competitorList, setCompetitorList] = useState([])
+  const inputRef = useRef(null);
 
   useEffect(() => {
     axios.get("https://mern-competitor-registration.herokuapp.com/read").then((response) => {
       setCompetitorList(response.data);
     })
-  }, [])
+  })
 
   //create new item in database
   const addToDatabase = () => {
@@ -39,25 +40,33 @@ function App() {
     });
   }
 
-  //refresh the page 
-  const refreshPage = () => {
-    window.location.reload(false);
+  //reset registration input field
+  const resetInputField = () => {
+    setCompetitorName("");
+    setRunningClub("");
+    setDistance("");
   };
+
+  //clear input field
+  const clearInput = () => {
+    inputRef.current.value = "";
+   };
 
   return (
     <div className="App">
     <h1>The Run as far as you like race</h1>
     <h2>Competitor Registration</h2>
     <label>Competitor name: </label>
-    <input type="text" 
-    onChange={(event) => {setCompetitorName(event.target.value);}}/>
+    <input type="text" //ref={inputRef}
+    value={competitorName}
+    onChange={(event) => {setCompetitorName(event.target.value); /*clearInput();*/}}/>
     <label>Running Club: </label>
-    <input type="text" 
+    <input type="text" value={runningClub}
     onChange={(event) => {setRunningClub(event.target.value);}}/>
     <label>Distance: </label>
-    <input type="number" 
+    <input type="number" value={distance}
     onChange={(event) => {setDistance(event.target.value);}}/>
-    <button className='registerButton' onClick={() => { addToDatabase(); refreshPage();}}>Register</button>
+    <button className='registerButton' type='submit' onClick={() => { addToDatabase(); resetInputField(); }}>Register</button>
     <h2>List of competitors</h2>
 
       {competitorList.map((val, key) => {
@@ -66,12 +75,12 @@ function App() {
                 <h4>Running Club: {val.runningClub}</h4>
                 <h3>Distance: {val.distance} km</h3>
                 <input type="number" 
-                placeholder='type new distance'
+                placeholder='enter new distance'
                 onChange={(event) => {setNewDistance(event.target.value);
                 }}
                 />
-                <button onClick={() => { updateDistance(val._id); refreshPage();}}>Update</button>
-                <button onClick={() => { deleteCompetitor(val._id); refreshPage();}}>Delete</button>
+                <button onClick={() => { updateDistance(val._id); }}>Update</button>
+                <button onClick={() => { deleteCompetitor(val._id); }}>Delete</button>
         </div>
       })};
     </div>
